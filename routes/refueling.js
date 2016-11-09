@@ -2,27 +2,30 @@
 var model = require("../models");
 
 //抛异常情况 try catch
-var getRefuelType=async(ctx,next)=>{
-    // ctx.response.type = "";
-    // var data = await model.refueltype.findAll();
-    try{
-        var data = await model.refueltype.findAll();
-        ctx.respData({
-            data:data
-        })
-    }
-    catch(err){
-        ctx.respData({
-            errcode:1000,errmsg:"error"
-        })
+
+var getList = (modelname) =>{
+    return async(ctx,next)=>{
+        try {
+            var data = await model[modelname].findAll();
+            ctx.respData({
+                data:data
+            })
+        } catch (error) {
+            ctx.respData({
+                errcode:1000,errmsg:"error"
+            })
+        }
     }
 }
 
-var getRefuelCategory=async(ctx,next)=>{
+
+var addRefuel = async(ctx,next)=>{
 
 }
 
 module.exports = {
-    "GET /refuel/type":getRefuelType,
-    "GET /refuel/category":getRefuelCategory
+    "GET /refuel/type":getList("refueltype"),
+    "GET /refuel/category":getList("refuelcategory"),
+    "GET /refuel/list":getList("refueling"),
+    "POST /refuel/add":addRefuel
 }

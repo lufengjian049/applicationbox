@@ -11,19 +11,23 @@ let refueltype = model.refueltype,
 
 (async ()=>{
     var refueltype1 = await refueltype.create({
-        name:"92#/93#"
+        name:"92#/93#",
+        order:1
     })
     console.log('created: ' + JSON.stringify(refueltype1));
     var refueltype2 = await refueltype.create({
-        name:"95#/97#"
+        name:"95#/97#",
+        order:2
     })
     console.log('created: ' + JSON.stringify(refueltype2));
     var refueltype3 = await refueltype.create({
-        name:"98#"
+        name:"98#",
+        order:3
     })
     console.log('created: ' + JSON.stringify(refueltype3));
     var refueltype4 = await refueltype.create({
-        name:"0#/柴油"
+        name:"0#/柴油",
+        order:4
     })
     console.log('created: ' + JSON.stringify(refueltype4));
 })();
