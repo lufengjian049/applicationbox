@@ -22,7 +22,7 @@ var sequelize = new Sequelize(config.database, config.username, config.password,
 
 const ID_TYPE = Sequelize.STRING(50);
 
-function defineModel(name, attributes) {
+function defineModel(name, attributes,filters) {
     var attrs = {};
     for (let key in attributes) {
         let value = attributes[key];
@@ -52,7 +52,7 @@ function defineModel(name, attributes) {
         type: Sequelize.BIGINT,
         allowNull: false
     };
-    return sequelize.define(name, attrs, {
+    var defaultFilter={
         tableName: name,
         timestamps: false,
         hooks: {
@@ -63,7 +63,7 @@ function defineModel(name, attributes) {
                     if (!obj.id) {
                         obj.id = generateId();
                     }
-                    obj.createdAt = now;
+                    obj.createdAt = obj.createdAt || now;
                     obj.updatedAt = now;
                     obj.version = 0;
                 } else {
@@ -73,7 +73,9 @@ function defineModel(name, attributes) {
                 }
             }
         }
-    });
+    }
+    filters = Object.assign({},defaultFilter,filters);
+    return sequelize.define(name, attrs, filters);
 }
 
 const TYPES = ['STRING', 'INTEGER', 'BIGINT', 'TEXT', 'DOUBLE', 'DATEONLY', 'BOOLEAN'];
@@ -87,7 +89,8 @@ var exp = {
         } else {
             throw new Error('Cannot sync() when NODE_ENV is set to \'production\'.');
         }
-    }
+    },
+    sequelize
 };
 
 for (let type of TYPES) {
