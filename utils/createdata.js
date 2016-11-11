@@ -60,7 +60,7 @@ let refueltype = model.refueltype,
     ];
     for(let item of list){
         await refueling.create({
-            "type":refueltype1.id,"category":refuelcategory1.id,"price":item.price,"cost":item.cost,"fuel":item.fuel,createdAt:(new Date(item.datestr))*1
+            "refueltypeId":refueltype1.id,"refuelcategoryId":refuelcategory1.id,"price":item.price,"cost":item.cost,"fuel":item.fuel,createdAt:(new Date(item.datestr))*1
         });
     }
     // list.forEach((item)=>{

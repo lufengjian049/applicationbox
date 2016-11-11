@@ -56,7 +56,8 @@ function defineModel(name, attributes,filters) {
         tableName: name,
         timestamps: false,
         hooks: {
-            beforeValidate: function (obj) {
+            beforeValidate: function (obj,options) {
+                debugger;
                 let now = Date.now();
                 if (obj.isNewRecord) {
                     console.log('will create entity...' + obj);
@@ -71,6 +72,12 @@ function defineModel(name, attributes,filters) {
                     obj.updatedAt = now;
                     obj.version++;
                 }
+            },
+            beforeCreate:function(ins){
+                console.log("beforeCreate")
+            },
+            beforeUpdate:function(ins){
+                console.log("beforeUpdate")
             }
         }
     }
