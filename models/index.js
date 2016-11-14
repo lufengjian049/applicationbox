@@ -18,6 +18,11 @@ for (let f of js_files) {
 // 生成 foreign key
 models.refueling.belongsTo(models.refueltype);
 models.refueling.belongsTo(models.refuelcategory);
+
+//question 关系
+models.questions.hasMany(models.questiontags,{as:"tags"});
+
+
 module.exports = models;
 module.exports.sync = () => {
     db.sync();

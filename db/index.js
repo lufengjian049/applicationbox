@@ -4,6 +4,8 @@ const uuid = require('node-uuid');
 
 const config = require('../config');
 
+const util = require("./util");
+
 console.log('init sequelize...');
 
 function generateId() {
@@ -57,7 +59,6 @@ function defineModel(name, attributes,filters) {
         timestamps: false,
         hooks: {
             beforeValidate: function (obj,options) {
-                debugger;
                 let now = Date.now();
                 if (obj.isNewRecord) {
                     console.log('will create entity...' + obj);
@@ -97,11 +98,16 @@ var exp = {
             throw new Error('Cannot sync() when NODE_ENV is set to \'production\'.');
         }
     },
-    sequelize
+    sequelize,
+    util:{}
 };
 
 for (let type of TYPES) {
     exp[type] = Sequelize[type];
+}
+//初始配置 util方法传入 models
+for(let ukey in util){
+    exp.util[ukey] = util[ukey](sequelize.models);
 }
 
 exp.ID = ID_TYPE;
