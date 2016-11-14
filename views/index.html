@@ -1,80 +1,98 @@
 {% extends "base.html" %} {% block main %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><span class="glyphicon glyphicon-user"></span> Please sign in</h3>
+<form class="form-horizontal" role="form">
+    <div class="form-group">
+        <label for="inputtitle" class="col-sm-3 control-label">Title</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputtitle" placeholder="title">
+        </div>
+    </div>
+    <div class="form-group tags">
+        <label for="inputtitle" class="col-sm-3 control-label">Had Tags</label>
+        <div class="col-sm-9 normaltag">
+            <span class="label active" title="select this tag">Info1</span>
+            <span class="label">Info2</span>
+            <span class="label">Info3</span>
+            <span class="label">Info4</span>
+            <span class="label">Info5</span>
+            <span class="label">Info1</span>
+            <span class="label">Info2</span>
+            <span class="label">Info3</span>
+            <span class="label">Info4</span>
+            <span class="label">Info5</span>
+            <span class="label">Info1</span>
+            <span class="label">Info2</span>
+            <span class="label">Info3</span>
+            <span class="label">Info4</span>
+            <span class="label">Info5</span>
+            <span class="label">Info1</span>
+            <span class="label">Info2</span>
+            <span class="label">Info3</span>
+            <span class="label">Info4</span>
+            <span class="label">Info5</span>
+            <span class="label" data-toggle="modal" data-target="#addtagmodel"><span class="glyphicon glyphicon-plus"></span></span>
+        </div>
+    </div>
+    <div class="form-group tags">
+        <label for="inputtitle" class="col-sm-3 control-label">Selected Tags</label>
+        <div class="col-sm-9">
+            <span class="label label-success" title="remove this tag">Info3</span>
+            <span class="label label-success">Info4</span>
+            <span class="label label-success">Info5</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="textareaanswer" class="col-sm-3 control-label">Answer</label>
+        <div class="col-sm-9">
+            <ul class="nav nav-tabs" id="answertab">
+                <li><a href="#writecontent">Write</a></li>
+                <li><a href="#previewcontent">Preview</a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade" id="writecontent">
+                    <textarea class="form-control" rows="6" id="textareaanswer" placeholder="answer"></textarea>
                 </div>
-                <div class="panel-body">
-                    <form action="/signin" method="post">
-                        <div class="form-group">
-                            <label>Email address</label>
-                            <input type="email" name="email" class="form-control" placeholder="Email">
-                            <p class="help-block">Use email: admin@example.com</p>
-                        </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password">
-                            <p class="help-block">Use password: 123456</p>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Sign In</button>
-                    </form>
+                <div class="tab-pane fade" id="previewcontent">
+                    previewing....
                 </div>
             </div>
+
         </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><span class="glyphicon glyphicon-hd-video"></span> Video training</h3>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+            <button type="submit" class="btn btn-default">save</button>
+            <button type="submit" class="btn btn-default">save && close</button>
+        </div>
+    </div>
+    <!--添加tag的模态框-->
+    <div id="addtagmodel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                 </div>
-                <div class="panel-body">
-                    <video width="100%" controls="controls">
-                        <source src="https://github.com/michaelliao/learn-javascript/raw/master/video/vscode-nodejs.mp4">
-                    </video>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveModelData">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Get more courses...</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">JavaScript</h3>
-                </div>
-                <div class="panel-body">
-                    <p>full-stack JavaScript course</p>
-                    <p><a target="_blank" href="http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000">Read more</a></p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Python</h3>
-                </div>
-                <div class="panel-body">
-                    <p>the latest Python course</p>
-                    <p><a target="_blank" href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000">Read more</a></p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">git</h3>
-                </div>
-                <div class="panel-body">
-                    <p>A course about git version control</p>
-                    <p><a target="_blank" href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000">Read more</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
+</form>
+<script>
+    $(function(){
+        $('#answertab a:first').tab('show')
+        $('#answertab a').click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        })
+        $("#saveModelData").click(function(){
+            alert("ok");
+            $('#addtagmodel').modal('hide');
+        })
+    })
+</script> {% endblock %}

@@ -7,42 +7,107 @@
     <meta name="description" content="learn javascript by www.liaoxuefeng.com">
     <title>{{ title }}</title>
     <link rel="stylesheet" href="/statics/css/bootstrap.css">
+    <style>
+        /* Space out content a bit */
+        
+        body {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        /* Everything but the jumbotron gets side spacing for mobile first views */
+        
+        .header,
+        .marketing,
+        .footer {
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+        /* Custom page header */
+        
+        .header {
+            border-bottom: 1px solid #e5e5e5;
+        }
+        /* Make the masthead heading the same height as the navigation */
+        
+        .header h3 {
+            padding-bottom: 19px;
+            margin-top: 0;
+            margin-bottom: 0;
+            line-height: 40px;
+        }
+        /* Custom page footer */
+        
+        .footer {
+            padding-top: 19px;
+            color: #777;
+            border-top: 1px solid #e5e5e5;
+        }
+        /* Customize container */
+        
+        @media (min-width: 768px) {
+            .container {
+                max-width: 730px;
+            }
+        }
+        
+        .container-narrow > hr {
+            margin: 30px 0;
+        }
+        /* Main marketing message and sign up button */
+        
+        /* Responsive: Portrait tablets and up */
+        
+        @media screen and (min-width: 768px) {
+            /* Remove the padding we set earlier */
+            .header,
+            .marketing,
+            .footer {
+                padding-right: 0;
+                padding-left: 0;
+            }
+            /* Space out the masthead */
+            .header {
+                margin-bottom: 30px;
+            }
+            /* Remove the bottom border on the jumbotron for visual effect */
+            .jumbotron {
+                border-bottom: 0;
+            }
+        }
+        .tags .label{
+            display:inline-block;
+            margin:2px;
+            cursor:pointer;
+            padding:.6em;
+        }
+        .tags .normaltag .label{
+            background:#fff;
+            color:#333;
+            border:1px solid #ccc;
+        }
+        .tags .normaltag .label.active{
+            border-color:#5cb85c;
+        }
+    </style>
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
     <script src="/statics/js/bootstrap.js"></script>
 </head>
 
 <body>
-    <header class="navbar navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a href="/" class="navbar-brand">Learn JavaScript</a>
-            </div>
-            <nav class="collapse navbar-collapse" id="bs-navbar">
-                <ul class="nav navbar-nav">
-                    <li><a target="_blank" href="http://www.liaoxuefeng.com/">Get Courses</a></li>
-                    <li><a target="_blank" href="https://github.com/michaelliao/learn-javascript">Source Code</a></li>
-                    <li><a target="_blank" href="http://getbootstrap.com/">Resource</a></li>
-                </ul>
-            </nav>
+    <div class="container">
+        <div class="header">
+            <ul class="nav nav-pills pull-right" role="tablist">
+                <li role="presentation" class="active"><a href="#">Home</a></li>
+                <li role="presentation"><a href="#">About</a></li>
+                <li role="presentation"><a href="#">Contact</a></li>
+            </ul>
+            <h3 class="text-muted">Application</h3>
         </div>
-    </header>
-    <div id="important" style="color:#cdbfe3; background-color:#6f5499; padding:30px 0; margin:-20px 0 20px 0;">
-        <div class="container">
-            <h1 style="color:#fff; font-size:60px">Getting started</h1>
-            <p style="font-size:24px; line-height:48px">Learn JavaScript, Node.js, npm, koa2, nunjucks, babel, etc. at liaoxuefeng.com.</p>
+        {% block main %} {% endblock %}
+        <div class="footer">
+            <p>© Company 2014</p>
         </div>
     </div>
-    {% block main %} {% endblock %}
-    <footer style="background-color:#ddd; padding: 20px 0;">
-        <div class="container">
-            <p>
-                <a target="_blank" href="http://www.liaoxuefeng.com">Website</a> - 
-                <a target="_blank" href="https://github.com/michaelliao/learn-javascript">GitHub</a> - 
-                <a target="_blank" href="http://weibo.com/liaoxuefeng">Weibo</a>
-            </p>
-            <p>This JavaScript course is created by <a target="_blank" href="http://weibo.com/liaoxuefeng">@廖雪峰</a>.</p>
-            <p>Code licensed <a target="_blank" href="https://github.com/michaelliao/learn-javascript/blob/master/LICENSE">Apache</a>.</p>
-        </div>
-    </footer>
 </body>
 
 </html>

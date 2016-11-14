@@ -3,8 +3,8 @@ var config = {
     database: 'application',
     username: 'www',
     password: 'www',
-    // host: '180.106.53.242',
-    host:'localhost',
+    host: '16r03151r6.iask.in',
+    // host:'localhost',
     port: 3306
 };
 
