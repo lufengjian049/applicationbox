@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block main %}
+    <div>
+        <ul>
+            {% for item in list %}
+                <li>
+                    <div>{{item.title}}</div>
+                    <div>
+                        {% for tag in item.tags %}
+                            <span class="label label-success">{{tag.name}}</span>
+                        {% endfor %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}

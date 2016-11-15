@@ -117,7 +117,8 @@
             }
         })
         //save
-        $(".savebtn").click(function(){
+        $(".savebtn").click(function(e){
+            e.preventDefault();
             var param={};
             param.title = $("#inputtitle").val(),
             param.answer = $("#textareaanswer").val(),
@@ -137,8 +138,8 @@
                 }
                 $.post("/question/add",param,function(data){
                     if(data.errcode == 0){
-                        // location.relod();
-                        alert(data.data);
+                        location.relod();
+                        // alert(data.data);
                     }
                 })
             }
