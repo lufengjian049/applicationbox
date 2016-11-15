@@ -3,41 +3,28 @@
     <div class="form-group">
         <label for="inputtitle" class="col-sm-3 control-label">Title</label>
         <div class="col-sm-9">
-            <input type="text" class="form-control" id="inputtitle" placeholder="title">
+            <input type="text" class="form-control" id="inputtitle" placeholder="title" name="title">
         </div>
     </div>
     <div class="form-group tags">
         <label for="inputtitle" class="col-sm-3 control-label">Had Tags</label>
         <div class="col-sm-9 normaltag">
-            <span class="label active" title="select this tag">Info1</span>
-            <span class="label">Info2</span>
-            <span class="label">Info3</span>
-            <span class="label">Info4</span>
-            <span class="label">Info5</span>
-            <span class="label">Info1</span>
-            <span class="label">Info2</span>
-            <span class="label">Info3</span>
-            <span class="label">Info4</span>
-            <span class="label">Info5</span>
-            <span class="label">Info1</span>
-            <span class="label">Info2</span>
-            <span class="label">Info3</span>
-            <span class="label">Info4</span>
-            <span class="label">Info5</span>
-            <span class="label">Info1</span>
-            <span class="label">Info2</span>
-            <span class="label">Info3</span>
-            <span class="label">Info4</span>
-            <span class="label">Info5</span>
-            <span class="label" data-toggle="modal" data-target="#addtagmodel"><span class="glyphicon glyphicon-plus"></span></span>
+            {% for item in tags %}
+                <span class="label selecttagitem" title="select this tag">{{item.name}}</span>
+            {% endfor %}
+            <!--<span class="label active" title="select this tag">Info1</span>-->
+            <span class="label labelIcon" data-toggle="modal" data-target="#addtagmodel"><span class="glyphicon glyphicon-plus"></span></span>
         </div>
     </div>
     <div class="form-group tags">
         <label for="inputtitle" class="col-sm-3 control-label">Selected Tags</label>
-        <div class="col-sm-9">
-            <span class="label label-success" title="remove this tag">Info3</span>
+        <div class="col-sm-9" id="selectedtagWrapper">
+            {% for item in selectedtags %}
+                <span class="label label-success" title="remove this tag">{{item.name}}</span>
+            {% endfor %}
+            <!--<span class="label label-success" title="remove this tag">Info3</span>
             <span class="label label-success">Info4</span>
-            <span class="label label-success">Info5</span>
+            <span class="label label-success">Info5</span>-->
         </div>
     </div>
     <div class="form-group">
@@ -49,50 +36,113 @@
             </ul>
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane fade" id="writecontent">
-                    <textarea class="form-control" rows="6" id="textareaanswer" placeholder="answer"></textarea>
+                    <textarea class="form-control" rows="6" id="textareaanswer" placeholder="answer" name="answer"></textarea>
                 </div>
                 <div class="tab-pane fade" id="previewcontent">
                     previewing....
                 </div>
             </div>
-
         </div>
     </div>
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-9">
-            <button type="submit" class="btn btn-default">save</button>
-            <button type="submit" class="btn btn-default">save && close</button>
-        </div>
-    </div>
-    <!--添加tag的模态框-->
-    <div id="addtagmodel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="saveModelData">Save changes</button>
-                </div>
-            </div>
+            <button type="submit" class="btn btn-default savebtn">save</button>
+            <button type="submit" class="btn btn-default savebtn closeact">save && close</button>
         </div>
     </div>
 </form>
+<!--添加tag的模态框-->
+<div id="addtagmodel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add this question's tag</h4>
+            </div>
+            <div class="modal-body">
+                <div><label for="">name</label></div>
+                <div><input type="text" id="addtagele"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveModelData">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
+    var lasttxt="";
     $(function(){
+        //tab
         $('#answertab a:first').tab('show')
         $('#answertab a').click(function (e) {
-            e.preventDefault()
+            e.preventDefault();
+            var mdstr = $("#textareaanswer").val();
+            if($(this).parent().index() == 1 && lasttxt != mdstr){
+                $("#previewcontent").html("previewing....")
+                $.post("/md/parse",{txt:mdstr},function(data){
+                    if(data.errcode == 0){
+                        $("#previewcontent").html(data.data.html);
+                        lasttxt = mdstr;
+                    }
+                })
+            }
             $(this).tab('show')
         })
-        $("#saveModelData").click(function(){
-            alert("ok");
-            $('#addtagmodel').modal('hide');
+        //选择tag
+        $(".selecttagitem").click(function(){
+            var $this = $(this);
+            if(!$this.hasClass("active")){
+                $this.addClass("active");
+                $("#selectedtagWrapper").append('<span class="label label-success removetagitem" title="remove this tag">'+$this.text()+'</span>');
+            }
         })
+        //删除tag
+        $("#selectedtagWrapper").on("click",".removetagitem",function(){
+            var $this = $(this);
+            $this.remove();
+            $(".normaltag span.active").each(function(){
+                if($(this).text() == $this.text()){
+                    $(this).removeClass("active");
+                }
+            })
+        })
+        //新增tag
+        $("#saveModelData").click(function(){
+            var tag = $("#addtagele").val();
+            if(tag){
+                $("#selectedtagWrapper").append('<span class="label label-success removetagitem" title="remove this tag">'+tag+'</span>');
+                $(".normaltag span.labelIcon").before('<span class="label selecttagitem active" title="select this tag">'+tag+'</span>');
+                $('#addtagmodel').modal('hide');
+            }
+        })
+        //save
+        $(".savebtn").click(function(){
+            var param={};
+            param.title = $("#inputtitle").val(),
+            param.answer = $("#textareaanswer").val(),
+            param.tags = [];
+            $("#selectedtagWrapper span").each(function(){
+                param.tags.push({
+                    name:$(this).text()
+                });
+            });
+            if(param.title && param.tags.length){
+                if(!$(this).hasClass("closeact")){
+                    param.openstatus = true;
+                }else if(param.answer){
+                    param.openstatus = false;
+                }else{
+                    return false;
+                }
+                $.post("/question/add",param,function(data){
+                    if(data.errcode == 0){
+                        // location.relod();
+                        alert(data.data);
+                    }
+                })
+            }
+        })
+        
     })
 </script> {% endblock %}

@@ -4,7 +4,7 @@ const uuid = require('node-uuid');
 
 const config = require('../config');
 
-const util = require("./util");
+// const util = require("./util");
 
 console.log('init sequelize...');
 
@@ -105,10 +105,7 @@ var exp = {
 for (let type of TYPES) {
     exp[type] = Sequelize[type];
 }
-//初始配置 util方法传入 models
-for(let ukey in util){
-    exp.util[ukey] = util[ukey](sequelize.models);
-}
+
 
 exp.ID = ID_TYPE;
 exp.generateId = generateId;

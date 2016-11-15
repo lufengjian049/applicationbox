@@ -1,6 +1,7 @@
 // scan all models defined in models:
 const fs = require('fs');
 const db = require('../db');
+const util = require("../db/util");
 
 let files = fs.readdirSync(__dirname);
 
@@ -22,8 +23,15 @@ models.refueling.belongsTo(models.refuelcategory);
 //question 关系
 models.questions.hasMany(models.questiontags,{as:"tags"});
 
+//初始配置 util方法传入 models
+var utilobj={};
+for(let ukey in util){
+    utilobj[ukey] = util[ukey](models);
+}
+
 
 module.exports = models;
+module.exports.util = utilobj;
 module.exports.sync = () => {
     db.sync();
 };
