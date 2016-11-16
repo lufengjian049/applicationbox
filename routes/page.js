@@ -22,7 +22,15 @@ var fn_questionlist = async(ctx,next)=>{
     })
 }
 
+var fn_favorite = async(ctx,next)=>{
+    
+    ctx.render("favorite.html",{
+        title:"favorite list"
+    })
+}
+
 module.exports = {
     "GET /page/index":fn_index,
-    "GET /page/queslist":fn_questionlist
+    "GET /page/queslist":fn_questionlist,
+    "GET /page/favorite":fn_favorite
 }
