@@ -1,28 +1,6 @@
 // var model = require("../model");
 var model = require("../models");
-var db = require("../db");
 //抛异常情况 try catch
-
-var getList = (modelname,searchparam) =>{
-    return async(ctx,next)=>{
-        try {
-            var data=null;
-            // if(modelname == "refueling"){
-            //     data = await model[modelname].scope("innertype").findAll(searchparam);
-            // }else{
-                data = await model[modelname].findAll(searchparam);
-            // }
-            ctx.respData({
-                data:data
-            })
-        } catch (error) {
-            ctx.respData({
-                errcode:1000,errmsg:"error",
-                error
-            })
-        }
-    }
-}
 
 var getRefuelList = async(ctx,next) =>{
     try {
@@ -78,9 +56,9 @@ var updateFunc = (modelname) =>{
 }
 
 module.exports = {
-    "GET /refuel/type":getList("refueltype",{order:[["index"]]}),
-    "GET /refuel/category":getList("refuelcategory",{order:[["index"]]}),
-    "GET /refuel/list":getList("refueling",{
+    "GET /refuel/type":model.util.getList("refueltype",{order:[["index"]]}),
+    "GET /refuel/category":model.util.getList("refuelcategory",{order:[["index"]]}),
+    "GET /refuel/list":model.util.getList("refueling",{
         include: [ 
             {model:model.refueltype,attributes:["name"]},
             {model:model.refuelcategory,attributes:["name"]}

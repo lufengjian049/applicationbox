@@ -8,19 +8,13 @@ var fn_index = async(ctx,next)=>{
 }
 
 var fn_questionlist = async(ctx,next)=>{
-    // var lists = model.util.getList("questions",{
-    //     include:[
-    //         {
-    //             model:model.questiontags,as:"tags",attributes:["name"]
-    //         }
-    //     ]
-    // });
     var lists = await model.questions.findAll({
         include:[
             {
                 model:model.questiontags,as:"tags",attributes:["name"]
             }
-        ]
+        ],
+        order:[["updatedAt","DESC"]]
     });
     ctx.render("questionlist.html",{
         title:"question list",

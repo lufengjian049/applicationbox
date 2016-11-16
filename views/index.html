@@ -138,8 +138,8 @@
                 }
                 $.post("/question/add",param,function(data){
                     if(data.errcode == 0){
-                        location.relod();
-                        // alert(data.data);
+                        location.reload();
+                        // alert(JSON.stringify(data.data));
                     }
                 })
             }

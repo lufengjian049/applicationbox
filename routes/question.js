@@ -1,5 +1,3 @@
-var db = require("../db");
-var models = db.sequelize.models;
 var model = require("../models");
 //post {
     // title:"",
@@ -16,7 +14,8 @@ var addQuestion = async(ctx,next) =>{
         if(!data.openstatus){
             data.endtime = (new Date())*1;
         }
-        var redata = models.questions.create(data,{
+        debugger;
+        var redata = await models.questions.create(data,{
             include:[{model:models.questiontags,as:"tags"}]
         });
         ctx.respData({
@@ -37,6 +36,7 @@ module.exports ={
             {
                 model:models.questiontags,as:"tags",attributes:["name"]
             }
-        ]
+        ],
+        order:[["updatedAt","DESC"]]
     })
 }

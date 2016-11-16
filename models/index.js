@@ -23,6 +23,10 @@ models.refueling.belongsTo(models.refuelcategory);
 //question 关系
 models.questions.hasMany(models.questiontags,{as:"tags"});
 
+//favorite 关系
+models.favoritecategory.hasMany(models.favorite);
+models.favorite.belongsTo(models.favoritecategory);
+
 //初始配置 util方法传入 models
 var utilobj={};
 for(let ukey in util){
