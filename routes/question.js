@@ -15,8 +15,8 @@ var addQuestion = async(ctx,next) =>{
             data.endtime = (new Date())*1;
         }
         debugger;
-        var redata = await models.questions.create(data,{
-            include:[{model:models.questiontags,as:"tags"}]
+        var redata = await model.questions.create(data,{
+            include:[{model:model.questiontags,as:"tags"}]
         });
         ctx.respData({
             data:redata
@@ -34,7 +34,7 @@ module.exports ={
     "GET /question/list":model.util.getList("questions",{
         include:[
             {
-                model:models.questiontags,as:"tags",attributes:["name"]
+                model:model.questiontags,as:"tags",attributes:["name"]
             }
         ],
         order:[["updatedAt","DESC"]]

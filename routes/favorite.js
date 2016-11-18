@@ -10,7 +10,7 @@ var addFavorite = async(ctx,next)=>{
             //     }
             // })
         // if(data.favoritecategoryId){ //已存在的category
-            
+        //TODO:数据插入成功，但是返回出错了
         if(!data.favoritecategoryId){ //不存在category
             var categoryinfo = await model.favoritecategory.create({
                 name:data.categoryname
@@ -19,7 +19,7 @@ var addFavorite = async(ctx,next)=>{
         }
         var redata = await model.favorite.create(data);
         ctx.respData({
-            data:redata
+            data:{}
         })
     } catch (error) {
         ctx.respData({
@@ -29,6 +29,31 @@ var addFavorite = async(ctx,next)=>{
     }
 }
 
+var deleteFavorite = async(ctx,next) =>{
+    try {
+        var data = ctx.request.body;
+        var redata = await model.favorite.destroy({
+            where:{
+                id:data.id
+            }
+        })
+        ctx.respData({
+            data:redata
+        })
+    } catch (error) {
+        
+    }
+}
+
 module.exports = {
-    "POST /favorite/add":addFavorite
+    "POST /favorite/add":addFavorite,
+    "GET /favorite/list":model.util.getList("favoritecategory",{
+        include:[
+            {
+                model:model.favorite
+            }
+        ],
+    }),
+    "GET /favorite/category":model.util.getList("favoritecategory"),
+    "POST /favorite/delete":deleteFavorite
 }

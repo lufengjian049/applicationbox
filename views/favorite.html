@@ -2,57 +2,26 @@
 <button type="button" class="btn btn-default" style="width:100%;margin-bottom:10px;" data-toggle="modal" data-target="#addtagmodel"><span class="glyphicon glyphicon-plus"></span></button>
 
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                    javascript
-                </a>
-            </h4>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse">
-            <div class="panel-body">
-                <ol>
-                    <li>a</li>
-                    <li>b</li>
-                </ol>
+    {% for item in lists %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{item.id}}" style="display:block">
+                        {{item.name}}
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse{{item.id}}" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <ol>
+                        {% for subitem in item.favorites%}
+                            <li><a href="{{subitem.url}}" target="_blank" data-itemid="{{subitem.id}}">{{subitem.title}}</a></li>
+                        {% endfor %}
+                    </ol>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                    React native
-                </a>
-            </h4>
-        </div>
-        <div id="collapseTwo" class="panel-collapse collapse">
-            <div class="panel-body">
-                <ol>
-                    <li>a</li>
-                    <li>b</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                    Rxjs
-                </a>
-            </h4>
-        </div>
-        <div id="collapseThree" class="panel-collapse collapse">
-            <div class="panel-body">
-                <ol>
-                    <li>a</li>
-                    <li>b</li>
-                </ol>
-            </div>
-        </div>
-    </div>
+    {% endfor %}
 </div>
 <div id="addtagmodel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
@@ -75,11 +44,9 @@
                         <label for="exampleInputFile">Category</label>
                         <select class="form-control" id="selectcategory" name="favoritecategoryId">
                             <option selected value="">select...</option>
-                            <option value="1111">1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                            {% for catitem in lists %}
+                                <option value="{{catitem.id}}">{{catitem.name}}</option>
+                            {% endfor %}
                             <option value="-1">new category</option>
                         </select>
                     </div>
@@ -143,7 +110,11 @@
             if(haserr){
                 return;
             }else{
-                alert("valide")
+                $.post("/favorite/add",data,function(data){
+                    if(data.errcode == 0){
+                        location.reload();
+                    }
+                })
             }
         })
     })

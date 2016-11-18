@@ -23,10 +23,22 @@ var fn_questionlist = async(ctx,next)=>{
 }
 
 var fn_favorite = async(ctx,next)=>{
-    
-    ctx.render("favorite.html",{
-        title:"favorite list"
-    })
+    try {
+        var favorites = await model.favoritecategory.findAll({
+            include:[
+                {
+                    model:model.favorite
+                }
+            ],
+            order:[["updatedAt","DESC"],[model.favorite,"updatedAt","DESC"]]
+        });
+        ctx.render("favorite.html",{
+            title:"favorite list",
+            lists:favorites
+        })
+    } catch (error) {
+        
+    }
 }
 
 module.exports = {
