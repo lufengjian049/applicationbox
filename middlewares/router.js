@@ -6,10 +6,10 @@ function mappingRouter(router,mapping,filename){
     for(let url in mapping){
         if(url == "routename")
             continue;
-        if(url.startsWith("GET ")){
-            router.get(filename+url.substr(4),mapping[url]);
-        }else if(url.startsWith("POST ")){
-            router.post(filename+url.substr(5),mapping[url]);
+        var urlarr = url.split(" ");
+        if(urlarr.length == 2){
+            // router[urlarr[0]].call(null,filename+url.substr(urlarr[0].length+1),mapping[url]);
+            router[urlarr[0]](filename+url.substr(urlarr[0].length+1),mapping[url]);
         }else{
             console.log('error');
         }

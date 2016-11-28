@@ -56,9 +56,9 @@ var updateFunc = (modelname) =>{
 }
 
 module.exports = {
-    "GET type":model.util.getList("refueltype",{order:[["index"]]}),
-    "GET category":model.util.getList("refuelcategory",{order:[["index"]]}),
-    "GET list":model.util.getList("refueling",{
+    "get type":model.util.getList("refueltype",{order:[["index"]]}),
+    "get category":model.util.getList("refuelcategory",{order:[["index"]]}),
+    "get list":model.util.getList("refueling",{
         include: [ 
             {model:model.refueltype,attributes:["name"]},
             {model:model.refuelcategory,attributes:["name"]}
@@ -67,6 +67,6 @@ module.exports = {
             ["createdAt"]
         ]
     }),
-    "POST add":newFunc("refueling"),
-    "POST update":updateFunc("refueling")
+    "post add":newFunc("refueling"),
+    "post update":updateFunc("refueling")
 }

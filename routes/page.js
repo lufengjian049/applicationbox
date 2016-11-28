@@ -42,7 +42,7 @@ var fn_favorite = async(ctx,next)=>{
 }
 
 module.exports = {
-    "GET index":fn_index,
-    "GET queslist":fn_questionlist,
-    "GET favorite":fn_favorite
+    "get index":fn_index,
+    "get queslist":fn_questionlist,
+    "get favorite":fn_favorite
 }

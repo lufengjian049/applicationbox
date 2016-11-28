@@ -46,14 +46,14 @@ var deleteFavorite = async(ctx,next) =>{
 }
 
 module.exports = {
-    "POST add":addFavorite,
-    "GET list":model.util.getList("favoritecategory",{
+    "post add":addFavorite,
+    "get list":model.util.getList("favoritecategory",{
         include:[
             {
                 model:model.favorite
             }
         ],
     }),
-    "GET category":model.util.getList("favoritecategory"),
-    "POST delete":deleteFavorite
+    "get category":model.util.getList("favoritecategory"),
+    "post delete":deleteFavorite
 }

@@ -48,10 +48,31 @@ var getQuestion  = async(ctx,next) =>{
         
     }
 }
+var deleteQuestion = async(ctx,next) =>{
+    // 删除 question && questiontags
+    try {
+        //ctx.params.id
+        var redata = await model.questions.destroy({
+            where:{
+                id:ctx.params.id
+            },
+            include:[
+                {
+                    model:model.questiontags,as:"tags",
+                }
+            ]
+        })
+        ctx.respData({
+            data:redata
+        })
+    } catch (error) {
+        
+    }
+}
 
 module.exports ={
-    "POST add":addQuestion,
-    "POST list":model.util.getList("questions",(ctx)=>{
+    "post add":addQuestion,
+    "post list":model.util.getList("questions",(ctx)=>{
         var data = ctx.request.body;
         //post  pageindex search tagname
         return {
@@ -75,8 +96,9 @@ module.exports ={
                 }
         };
     }),
-    "GET tags":model.util.getList("questiontags",{
+    "get tags":model.util.getList("questiontags",{
         group:"name"
     }),
+    "del :id":deleteQuestion
     // "GET getlistbytag":
 }
