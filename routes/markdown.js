@@ -9,5 +9,6 @@ var parseMarkDown=async(ctx,next)=>{
 }
 
 module.exports = {
-    "POST /md/parse":parseMarkDown
+    "routename":"md",
+    "POST parse":parseMarkDown
 }

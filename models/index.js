@@ -30,7 +30,10 @@ models.favorite.belongsTo(models.favoritecategory);
 //初始配置 util方法传入 models
 var utilobj={};
 for(let ukey in util){
-    utilobj[ukey] = util[ukey](models);
+    if(typeof util[ukey] === "function")   //过滤掉 常量属性
+        utilobj[ukey] = util[ukey](models);
+    else
+        utilobj[ukey] = util[ukey];  //常量属性 复制
 }
 
 

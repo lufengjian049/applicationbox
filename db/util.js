@@ -1,10 +1,12 @@
 module.exports = {
-    getList:(models)=>(modelname,searchparam)=>{
+    getList:(models)=>(modelname,searchparamfn)=>{
         // return (modelname,searchparam)=>{
             var model = models[modelname];
             return async(ctx,next)=>{
                 try {
-                    var data=null;
+                    var data=null,
+                        searchparam= typeof searchparamfn === "function" ? searchparamfn(ctx) : searchparamfn;
+
                     data = await model.findAll(searchparam);
                     ctx.respData({
                         data:data
@@ -17,5 +19,7 @@ module.exports = {
                 }
             }
         // }
-    }
+    },
+    //每页显示的数量
+    PAGESIZE:10
 }
