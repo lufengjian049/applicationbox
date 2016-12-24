@@ -2,7 +2,10 @@ const fs = require("fs");
 
 function mappingRouter(router,mapping,filename){
     // debugger
-    filename = "/"+filename+"/";
+    if(filename == "page")
+        filename = "/";
+    else
+        filename = "/"+filename+"/";
     for(let url in mapping){
         if(url == "routename")
             continue;

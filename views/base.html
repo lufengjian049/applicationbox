@@ -89,20 +89,35 @@
             border-color:#5cb85c;
         }
     </style>
+    <link rel="stylesheet" href="/statics/css/audioplayer.css">
     <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
     <script src="/statics/js/bootstrap.js"></script>
 </head>
 
 <body>
     <div class="container">
-        <div class="header">
-            <ul class="nav nav-pills pull-right" role="tablist">
-                <li role="presentation" class="active"><a href="#">Home</a></li>
-                <li role="presentation"><a href="#">About</a></li>
-                <li role="presentation"><a href="#">Contact</a></li>
-            </ul>
-            <h3 class="text-muted">Application</h3>
-        </div>
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Application</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
+                <ul class="nav navbar-nav">
+                    <li class={{"active" if pagename == 'index' else ""}}><a href="/index">Home</a></li>
+                    <li class={{"active" if pagename == 'favorite' else ""}}><a href="/favorite">Favorite</a></li>
+                    <li class={{"active" if pagename == 'question' else ""}}><a href="/queslist">QuestionList</a></li>
+                    <li class={{"active" if pagename == 'audio' else ""}}><a href="/audio">Music</a></li>
+                </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+        <div style="height:34px"></div>
         {% block main %} {% endblock %}
         <div class="footer">
             <p>© Company 2014</p>
