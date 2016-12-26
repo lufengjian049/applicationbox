@@ -45,28 +45,46 @@ var getQuestion  = async(ctx,next) =>{
         model.util.getList("questions",findParam);
         
     } catch (error) {
-        
+        ctx.respData({
+            errcode:1000,errmsg:"error",
+            error
+        })
     }
 }
 var deleteQuestion = async(ctx,next) =>{
     // 删除 question && questiontags
     try {
         //ctx.params.id
-        var redata = await model.questions.destroy({
+        //destroy 不支持include
+        var line1 = await model.questions.destroy({
             where:{
                 id:ctx.params.id
             },
-            include:[
-                {
-                    model:model.questiontags,as:"tags",
-                }
-            ]
-        })
-        ctx.respData({
-            data:redata
-        })
+            // include:[
+            //     {
+            //         model:model.questiontags,as:"tags",
+            //     }
+            // ]
+        }),
+        line2 = await model.questiontags.destroy({
+            where:{
+                questionId:ctx.params.id
+            }
+        }),
+        redata = line1 + line2;
+        if(redata > 2)
+            ctx.respData({
+                data:redata
+            })
+        else
+            ctx.respData({
+                errcode:1000,errmsg:"error destory",
+            })
     } catch (error) {
-        
+        ctx.respData({
+            errcode:1000,errmsg:"error",
+            error
+        })
     }
 }
 
