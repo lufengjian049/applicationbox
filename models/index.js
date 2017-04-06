@@ -29,7 +29,7 @@ models.favorite.belongsTo(models.favoritecategory);
 
 //audio关系
 models.audiocategory.hasMany(models.audios);
-models.favorite.belongsTo(models.audiocategory);
+models.audios.belongsTo(models.audiocategory);
 
 //初始配置 util方法传入 models
 var utilobj={};
