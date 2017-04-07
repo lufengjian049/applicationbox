@@ -1,5 +1,6 @@
 var model = require("../models");
 var audioconfig = require("../config/audioconfig");
+
 var fn_index = async(ctx,next)=>{
     var tags = await model.questiontags.findAll({group:"name"});
     ctx.render("index.html",{
@@ -76,9 +77,16 @@ var _getAudioData = () => {
     }
 }
 
+var fn_upload = async(ctx,next) =>{
+    ctx.render("upload.html",{
+        title:"upload",
+        pagename:"upload"
+    })
+}
 module.exports = {
-    "get index":fn_index,
+    "get ":fn_index,
     "get queslist":fn_questionlist,
     "get favorite":fn_favorite,
     "get audio":fn_audio,
+    "get upload":fn_upload,
 }

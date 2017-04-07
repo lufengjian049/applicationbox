@@ -3,19 +3,20 @@ const fs = require("fs");
 function mappingRouter(router,mapping,filename){
     // debugger
     if(filename == "page")
-        filename = "/";
+        filename = "";
     else
-        filename = "/"+filename+"/";
+        filename = "/"+filename;
     for(let url in mapping){
         if(url == "routename")
             continue;
         var urlarr = url.split(" ");
-        if(urlarr.length == 2){
-            // router[urlarr[0]].call(null,filename+url.substr(urlarr[0].length+1),mapping[url]);
-            router[urlarr[0]](filename+url.substr(urlarr[0].length+1),mapping[url]);
-        }else{
-            console.log('error');
-        }
+        router[urlarr[0]](filename + (urlarr[1] ? ("/"+urlarr[1]) : ""),mapping[url]);
+        // if(urlarr.length == 2){
+        //     // router[urlarr[0]].call(null,filename+url.substr(urlarr[0].length+1),mapping[url]);
+        //     router[urlarr[0]](filename+url.substr(urlarr[0].length+1),mapping[url]);
+        // }else{
+        //     console.log('error');
+        // }
     }
 }
 
