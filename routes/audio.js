@@ -17,13 +17,14 @@ var addcategory = async(ctx,next) =>{
 
 module.exports = {
     "get categorylist":model.util.getList("audiocategory"),
-    "get audiolistbyid":model.util.getList("audios",(ctx)=>{
+    "post audiolistbyid":model.util.getList("audios",(ctx)=>{
         //获取链接的param
-        var param = ctx.request.param;
+        var param = ctx.request.body;
         return {
             where:{
-                "audiocategoryId":param
-            }
+                "audiocategoryId":param.id
+            },
+            order:[["updatedAt"]]
         }
     }),
     "post addcategory":model.util.add("audiocategory"),

@@ -78,10 +78,17 @@ var _getAudioData = () => {
 }
 
 var fn_upload = async(ctx,next) =>{
-    ctx.render("upload.html",{
-        title:"upload",
-        pagename:"upload"
-    })
+    try {
+        var categorys = await model.audiocategory.findAll();
+        ctx.render("upload.html",{
+            title:"upload",
+            pagename:"upload",
+            categorys:categorys
+        })
+    } catch (error) {
+        
+    }
+    
 }
 module.exports = {
     "get ":fn_index,
