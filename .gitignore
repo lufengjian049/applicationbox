@@ -2,3 +2,5 @@ node_modules
 statics/audio/*
 statics/upload/*
 statics/tmp/*
+.idea/*
+.wing/*
