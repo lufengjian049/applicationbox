@@ -15,6 +15,29 @@ var addcategory = async(ctx,next) =>{
     }
 }
 
+var deleteCategory = async(ctx,next) =>{
+    //是否 删除分类下的 歌曲
+    try {
+        let delline = await model.audiocategory.destroy({
+            where:{
+                id:ctx.params.id
+            },
+        })
+        if(delline > 0){
+            ctx.respData({
+                data:delline
+            })
+        }else{
+            new Error('error')
+        }
+    } catch (error) {
+        ctx.respData({
+            errcode:1000,errmsg:"error",
+            error
+        })
+    }
+}
+
 module.exports = {
     "get categorylist":model.util.getList("audiocategory"),
     "post audiolistbyid":model.util.getList("audios",(ctx)=>{
@@ -29,5 +52,6 @@ module.exports = {
     }),
     "post addcategory":model.util.add("audiocategory"),
     "post addaudio":model.util.add("audios"),
+    "del :id":deleteCategory
     //上传文件
 }
