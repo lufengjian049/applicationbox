@@ -39,7 +39,11 @@ var deleteCategory = async(ctx,next) =>{
 }
 
 module.exports = {
-    "get categorylist":model.util.getList("audiocategory"),
+    "get categorylist":model.util.getList("audiocategory",(ctx) =>{
+        return {
+            order:[['updatedAt',"DESC"]]
+        }
+    }),
     "post audiolistbyid":model.util.getList("audios",(ctx)=>{
         //获取链接的param
         var param = ctx.request.body;
